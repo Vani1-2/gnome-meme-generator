@@ -24,7 +24,7 @@
     ],
     "modules" : [
         {
-            "name" : "myapp",
+            "name" : "Test App",
             "builddir" : true,
             "buildsystem" : "meson",
             "sources" : [
