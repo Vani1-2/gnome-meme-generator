@@ -87,7 +87,7 @@ myapp_application_about_action (GSimpleAction *action,
 	                       "application-icon", "org.gnome.Example",
 	                       "developer-name", "Giovanni",
 	                       "translator-credits", _("translator-credits"),
-	                       "version", "0.0.0-1.alpha",
+	                       "version", "0.0.1.beta",
 	                       "developers", developers,
 	                       "copyright", "© 2025 Giovanni",
 	                       NULL);
