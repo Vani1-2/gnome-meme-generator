@@ -1,10 +1,11 @@
 [Desktop Entry]
-Name=Meme Generator
+Name=Memerist
+Comment=Create memes with custom text overlays
 Exec=Memerist
-Icon=org.gnome.Example
+Icon=org.gnome.Memerist
 Terminal=false
 Type=Application
-Categories=Utility;
-Keywords=GTK;
+Categories=Graphics;Photography;
+Keywords=meme;image;text;caption;overlay;funny;
 StartupNotify=true
 DBusActivatable=true
