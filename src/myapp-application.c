@@ -20,7 +20,6 @@
 
 #include "config.h"
 #include <glib/gi18n.h>
-
 #include "myapp-application.h"
 #include "myapp-window.h"
 
@@ -36,7 +35,6 @@ myapp_application_new (const char        *application_id,
                        GApplicationFlags  flags)
 {
 	g_return_val_if_fail (application_id != NULL, NULL);
-
 	return g_object_new (MYAPP_TYPE_APPLICATION,
 	                     "application-id", application_id,
 	                     "flags", flags,
@@ -52,7 +50,6 @@ myapp_application_activate (GApplication *app)
 	g_assert (MYAPP_IS_APPLICATION (app));
 
 	window = gtk_application_get_active_window (GTK_APPLICATION (app));
-
 	if (window == NULL)
 		window = g_object_new (MYAPP_TYPE_WINDOW,
 		                       "application", app,
@@ -87,7 +84,7 @@ myapp_application_about_action (GSimpleAction *action,
 	                       "application-icon", "org.gnome.Example",
 	                       "developer-name", "Giovanni",
 	                       "translator-credits", _("translator-credits"),
-	                       "version", "0.0.2.alpha",
+	                       "version", "0.0.13.alpha",
 	                       "developers", developers,
 	                       "copyright", "© 2025 Giovanni",
 	                       NULL);
@@ -105,9 +102,32 @@ myapp_application_quit_action (GSimpleAction *action,
 	g_application_quit (G_APPLICATION (self));
 }
 
+static void
+myapp_application_color_scheme_action (GSimpleAction *action,
+                                       GVariant      *parameter,
+                                       gpointer       user_data)
+{
+	AdwStyleManager *style_manager;
+	const char *scheme;
+
+	style_manager = adw_style_manager_get_default ();
+	scheme = g_variant_get_string (parameter, NULL);
+
+	if (g_strcmp0 (scheme, "light") == 0) {
+		adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_FORCE_LIGHT);
+	} else if (g_strcmp0 (scheme, "dark") == 0) {
+		adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_FORCE_DARK);
+	} else {
+		adw_style_manager_set_color_scheme (style_manager, ADW_COLOR_SCHEME_DEFAULT);
+	}
+
+	g_simple_action_set_state (action, parameter);
+}
+
 static const GActionEntry app_actions[] = {
 	{ "quit", myapp_application_quit_action },
 	{ "about", myapp_application_about_action },
+	{ "color-scheme", myapp_application_color_scheme_action, "s", "'default'", NULL },
 };
 
 static void
