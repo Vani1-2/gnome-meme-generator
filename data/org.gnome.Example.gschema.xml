@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="memerist">
+	<schema id="org.gnome.Memerist" path="/org/gnome/Memerist/">
+		<key name="window-width" type="i">
+			<default>900</default>
+			<summary>Window width</summary>
+			<description>The last width of the application window</description>
+		</key>
+
+		<key name="window-height" type="i">
+			<default>700</default>
+			<summary>Window height</summary>
+			<description>The last height of the application window</description>
+		</key>
+
+		<key name="window-maximized" type="b">
+			<default>false</default>
+			<summary>Window maximized state</summary>
+			<description>Whether the window was maximized on last close</description>
+		</key>
+
+		<key name="last-export-directory" type="s">
+			<default>''</default>
+			<summary>Last export directory</summary>
+			<description>The last directory used to export memes</description>
+		</key>
+
+		<key name="color-scheme" type="s">
+			<default>'default'</default>
+			<summary>Color scheme preference</summary>
+			<description>Preferred color scheme: 'light', 'dark', or 'default'</description>
+		</key>
+	</schema>
+</schemalist>
