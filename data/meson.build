@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-        input: 'org.gnome.Example.desktop.in',
-       output: 'org.gnome.Example.desktop',
+        input: 'org.gnome.Memerist.desktop.in',
+       output: 'org.gnome.Memerist.desktop',
          type: 'desktop',
        po_dir: '../po',
       install: true,

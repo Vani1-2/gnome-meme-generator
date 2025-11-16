@@ -1,5 +1,5 @@
 {
-    "id" : "org.gnome.Example",
+    "id" : "org.gnome.Memerist",
     "runtime" : "org.gnome.Platform",
     "runtime-version" : "48",
     "sdk" : "org.gnome.Sdk",

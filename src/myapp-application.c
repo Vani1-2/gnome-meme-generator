@@ -81,10 +81,10 @@ myapp_application_about_action (GSimpleAction *action,
 
 	adw_show_about_dialog (GTK_WIDGET (window),
 	                       "application-name", "Meme Generator",
-	                       "application-icon", "org.gnome.Example",
+	                       "application-icon", "org.gnome.Memerist",
 	                       "developer-name", "Giovanni",
 	                       "translator-credits", _("translator-credits"),
-	                       "version", "0.0.17.alpha",
+	                       "version", "0.0.21.alpha",
 	                       "developers", developers,
 	                       "copyright", "© 2025 Giovanni",
 	                       NULL);
