@@ -1,3 +1,6 @@
+
+![org gnome Memerist](https://github.com/user-attachments/assets/ce678c16-10e4-476a-b60c-f87a5e244937)
+
 # GNOME Meme Generator
 
 The ultimate tool for creating memes built upon GTK-4 and Libadwaita for the GNOME desktop.
