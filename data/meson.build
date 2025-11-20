@@ -18,7 +18,7 @@ appstreamcli = find_program('appstreamcli', required: false, disabler: true)
 test('Validate appstream file', appstreamcli,
      args: ['validate', '--no-net', '--explain'])
 
-install_data('org.gnome.Example.gschema.xml',
+install_data('org.gnome.Memerist.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
