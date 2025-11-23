@@ -19,18 +19,16 @@ The ultimate tool for creating memes built upon GTK-4 and Libadwaita for the GNO
 
 
 
-# Building
-## Prerequisite's
-You need to install this packages in order to build this program:
-- gtk4-devel 
-- libadwaita-devel 
-
-
-
-
-
+# Installation
+On releases section you can find ``.rpm`` files for x86_64
 
 ## Building
+## Prerequisite's
+You need to install this packages in order to build this program:
+```bash
+- gtk4-devel 
+- libadwaita-devel 
+```
 
 ```bash
 git clone https://github.com/Vani1-2/gnome-meme-generator.git
@@ -39,3 +37,5 @@ meson setup build
 meson compile -C build
 #Optional
 sudo meson install -C build
+
+
