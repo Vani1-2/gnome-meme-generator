@@ -1,5 +1,5 @@
 Name:           Memerist
-Version:        0.0.35.beta.3
+Version:        0.0.38.beta.5
 Release:        1%{?dist}
 Summary:        Meme generator with text overlays
 License:        GPL-3.0-or-later
@@ -22,11 +22,12 @@ Create memes with custom text overlays.
 %meson_install
 
 %files
-%{_bindir}/Memerist
+%{_bindir}/memerist
 %{_datadir}/applications/org.gnome.Memerist.desktop
 %{_datadir}/glib-2.0/schemas/org.gnome.Memerist.gschema.xml
 %{_datadir}/icons/hicolor/scalable/apps/org.gnome.Memerist.svg
 %{_datadir}/icons/hicolor/symbolic/apps/org.gnome.Memerist-symbolic.svg
+%{_datadir}/Memerist/templates/*
 
 %post
 /usr/bin/glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
@@ -46,6 +47,3 @@ rm -f /usr/local/share/icons/hicolor/scalable/apps/org.gnome.Memerist.svg
 rm -f /usr/local/share/icons/hicolor/symbolic/apps/org.gnome.Memerist-symbolic.svg
 
 
-%changelog
-* Sun Nov 23 2025 Giovanni Rafanan <giovannirafanan609@gmail.com> - 0.0.29.alpha.8-1
-- Tried fix missing icon on the app grid

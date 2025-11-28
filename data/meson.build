@@ -12,7 +12,9 @@ if desktop_utils.found()
   test('Validate desktop file', desktop_utils, args: [desktop_file])
 endif
 
-
+install_subdir('templates',
+  install_dir: get_option('datadir') / 'Memerist'
+)
 
 appstreamcli = find_program('appstreamcli', required: false, disabler: true)
 test('Validate appstream file', appstreamcli,
@@ -27,3 +29,4 @@ test('Validate schema file',
      compile_schemas,
      args: ['--strict', '--dry-run', meson.current_source_dir()])
 subdir('icons')
+
