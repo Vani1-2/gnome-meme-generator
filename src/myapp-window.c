@@ -242,7 +242,7 @@ on_template_selected (GtkFlowBox *flowbox, GtkFlowBoxChild *child, MyappWindow *
 
 	render_meme (self);
 }
-
+//drag start to 354
 static void
 on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
 {
@@ -393,7 +393,7 @@ on_load_image_response (GObject *source, GAsyncResult *result, gpointer user_dat
 	}
 
 	self->top_text_y = 0.1;
-	self->bottom_text_y = 0.9;
+	self->bottom_text_x = 0.9;
 
 	gtk_widget_set_sensitive (GTK_WIDGET (self->export_button), TRUE);
 	gtk_widget_set_sensitive (GTK_WIDGET (self->clear_button), TRUE);
