@@ -76,7 +76,7 @@ myapp_application_about_action (GSimpleAction *action,
                          "application-name", "Meme Generator",
                          "application-icon", "org.gnome.Memerist",
                          "developer-name", "Giovanni",
-                         "version", "0.0.65.beta.6",
+                         "version", PACKAGE_VERSION,
                          "developers", developers,
                          "copyright", "© 2025 Giovanni",
                          NULL);

@@ -1,5 +1,13 @@
-project('myapp', 'c',
-          version: '0.1.0',
+version_cmd = run_command('sh', '-c', 'grep "^Version:" memerist.spec | awk "{print \$2}"', check: false)
+app_version = version_cmd.stdout().strip()
+
+
+if app_version == ''
+  app_version = '0.1.0'
+endif
+
+project('memerist', 'c',
+          version: app_version,
     meson_version: '>= 1.0.0',
   default_options: [ 'warning_level=2', 'werror=false', 'c_std=gnu11', ],
 )
