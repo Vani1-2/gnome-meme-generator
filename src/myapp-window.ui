@@ -4,7 +4,7 @@
   <requires lib="Adw" version="1.0"/>
   <template class="MyappWindow" parent="AdwApplicationWindow">
     <property name="title" translatable="yes">Meme Generator</property>
-    <property name="default-width">900</property>
+    <property name="default-width">950</property>
     <property name="default-height">700</property>
     <property name="content">
       <object class="AdwToolbarView">
@@ -15,6 +15,7 @@
                 <property name="title">Meme Generator</property>
               </object>
             </property>
+
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
@@ -23,151 +24,195 @@
                 <property name="menu-model">primary_menu</property>
               </object>
             </child>
+
+            <child type="end">
+              <object class="GtkButton" id="export_button">
+                <property name="label" translatable="yes">Export</property>
+                <property name="sensitive">false</property>
+                <property name="tooltip-text">Save your meme</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+
+            <child type="start">
+              <object class="GtkButton" id="clear_button">
+                <property name="icon-name">edit-clear-symbolic</property>
+                <property name="tooltip-text">Clear All</property>
+                <property name="sensitive">false</property>
+              </object>
+            </child>
+
           </object>
         </child>
+
         <property name="content">
           <object class="GtkBox">
             <property name="orientation">horizontal</property>
-            <property name="spacing">12</property>
-            <property name="margin-top">12</property>
-            <property name="margin-bottom">12</property>
-            <property name="margin-start">12</property>
-            <property name="margin-end">12</property>
 
             <child>
               <object class="GtkBox">
                 <property name="orientation">vertical</property>
-                <property name="spacing">12</property>
-                <property name="hexpand">false</property>
-                <property name="width-request">300</property>
+                <property name="width-request">320</property>
+                <style>
+                  <class name="background"/>
+                </style>
 
-                <!-- Template Gallery -->
                 <child>
-                  <object class="AdwPreferencesGroup">
-                    <property name="title">Templates</property>
-                    <property name="description">Choose a meme template</property>
-
+                  <object class="GtkScrolledWindow">
+                    <property name="hscrollbar-policy">never</property>
+                    <property name="vexpand">true</property>
                     <child>
-                      <object class="GtkScrolledWindow">
-                        <property name="height-request">200</property>
-                        <property name="hscrollbar-policy">never</property>
+                      <object class="AdwPreferencesPage">
+
                         <child>
-                          <object class="GtkFlowBox" id="template_gallery">
-                            <property name="selection-mode">single</property>
-                            <property name="max-children-per-line">2</property>
-                            <property name="min-children-per-line">2</property>
-                            <property name="column-spacing">6</property>
-                            <property name="row-spacing">6</property>
-                            <property name="homogeneous">true</property>
+                          <object class="AdwPreferencesGroup">
+                            <property name="title">Base Image</property>
+
+                            <child>
+                              <object class="AdwActionRow">
+                                <property name="title">Custom File</property>
+                                <property name="subtitle">Load from disk</property>
+                                <child>
+                                  <object class="GtkButton" id="load_image_button">
+                                    <property name="icon-name">document-open-symbolic</property>
+                                    <property name="valign">center</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="margin-top">12</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label">Templates</property>
+                                    <property name="xalign">0</property>
+                                    <property name="margin-bottom">6</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkScrolledWindow">
+                                    <property name="height-request">250</property>
+                                    <property name="hscrollbar-policy">never</property>
+                                    <style>
+                                      <class name="view"/>
+                                    </style>
+                                    <child>
+                                      <object class="GtkFlowBox" id="template_gallery">
+                                        <property name="selection-mode">single</property>
+                                        <property name="max-children-per-line">2</property>
+                                        <property name="min-children-per-line">2</property>
+                                        <property name="column-spacing">6</property>
+                                        <property name="row-spacing">6</property>
+                                        <property name="homogeneous">true</property>
+                                        <property name="margin-top">6</property>
+                                        <property name="margin-bottom">6</property>
+                                        <property name="margin-start">6</property>
+                                        <property name="margin-end">6</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="AdwPreferencesGroup">
+                            <property name="title">Layers</property>
+                            <child>
+                              <object class="AdwActionRow">
+                                <property name="title">Add Image Layer</property>
+                                <property name="subtitle">Overlay another image</property>
+                                <child>
+                                  <object class="GtkButton" id="add_image_button">
+                                    <property name="icon-name">list-add-symbolic</property>
+                                    <property name="valign">center</property>
+                                    <property name="sensitive">false</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                        <child>
+                          <object class="AdwPreferencesGroup">
+                            <property name="title">Captions</property>
+                            <property name="description">Drag text on preview to move</property>
+                            <child>
+                              <object class="AdwEntryRow" id="top_text_entry">
+                                <property name="title">Top Text</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwEntryRow" id="bottom_text_entry">
+                                <property name="title">Bottom Text</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkSeparator"/>
+            </child>
+
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="hexpand">true</property>
+                <property name="vexpand">true</property>
+                <child>
+                  <object class="GtkViewport">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="margin-top">24</property>
+                        <property name="margin-bottom">24</property>
+                        <property name="margin-start">24</property>
+                        <property name="margin-end">24</property>
+                        <child>
+                          <object class="GtkFrame">
+                            <style>
+                              <class name="shadow-sm"/>
+                            </style>
+                            <child>
+                              <object class="GtkImage" id="meme_preview">
+                                <property name="icon-name">image-x-generic-symbolic</property>
+                                <property name="pixel-size">128</property>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>
                     </child>
                   </object>
                 </child>
-
-                <!-- Image Layer Control -->
-                <child>
-                  <object class="GtkButton" id="add_image_button">
-                    <property name="label">Add Image Layer</property>
-                    <property name="halign">fill</property>
-                    <property name="sensitive">false</property>
-                    <style>
-                      <class name="pill"/>
-                    </style>
-                  </object>
-                </child>
-
-                <!-- Load Custom Image Button -->
-                <child>
-                  <object class="GtkBox">
-                    <property name="orientation">horizontal</property>
-                    <property name="spacing">6</property>
-                    <property name="homogeneous">true</property>
-
-                    <child>
-                      <object class="GtkButton" id="load_image_button">
-                        <property name="label">Load Image</property>
-                        <style>
-                          <class name="suggested-action"/>
-                        </style>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="GtkButton" id="clear_button">
-                        <property name="label">Clear</property>
-                        <property name="sensitive">false</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-
-                <!-- Text inputs -->
-                <child>
-                  <object class="AdwPreferencesGroup">
-                    <property name="title">Meme Text</property>
-                    <property name="description">Drag text on preview to reposition</property>
-
-                    <child>
-                      <object class="AdwEntryRow" id="top_text_entry">
-                        <property name="title">Top Text</property>
-                      </object>
-                    </child>
-
-                    <child>
-                      <object class="AdwEntryRow" id="bottom_text_entry">
-                        <property name="title">Bottom Text</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-
-                <!-- Export Button -->
-                <child>
-                  <object class="GtkButton" id="export_button">
-                    <property name="label">Export Meme</property>
-                    <property name="halign">fill</property>
-                    <property name="sensitive">false</property>
-                  </object>
-                </child>
-
-                <!-- Spacer to push everything to top -->
-                <child>
-                  <object class="GtkBox">
-                    <property name="vexpand">true</property>
-                  </object>
-                </child>
               </object>
             </child>
 
-            <child>
-              <object class="GtkBox">
-                <property name="orientation">vertical</property>
-                <property name="hexpand">true</property>
-                <property name="vexpand">true</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-
-                <child>
-                  <object class="GtkFrame">
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <child>
-                      <object class="GtkImage" id="meme_preview">
-                        <property name="pixel-size">500</property>
-                        <property name="icon-name">image-x-generic-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
           </object>
         </property>
       </object>
     </property>
   </template>
+
   <menu id="primary_menu">
     <section>
       <submenu>
