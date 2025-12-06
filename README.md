@@ -1,7 +1,7 @@
 # GNOME Meme Editor
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/12d959d2-25e9-4da1-9d6b-9f5ea1381d15" alt="GNOME Meme Editor Logo" width="128"/>
+  <img src="data/org.gnome.Memerist.svg" alt="GNOME Meme Editor Logo" width="128"/>
 </p>
 
 <p align="center">
@@ -120,3 +120,4 @@ Built with GTK 4 and Libadwaita for the GNOME desktop environment.
 <p align="center">
   Made with a lot of Redbull
 </p>
+
