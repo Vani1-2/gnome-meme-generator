@@ -716,6 +716,23 @@ draw_text_with_outline (cairo_t *cr, const char *text, double x, double y, doubl
     cairo_set_source_rgb (cr, 1, 1, 1); cairo_move_to (cr, x, y); cairo_show_text (cr, text);
 }
 
+
+
+
+
+
+
+
+// You are entering the void, any code change here can lead to the destruction of an entire function
+
+
+
+
+
+
+
+
+
 static void
 render_meme (MyappWindow *self)
 {
@@ -724,7 +741,7 @@ render_meme (MyappWindow *self)
     cairo_surface_t *surface;
     cairo_t *cr;
     GdkTexture *texture;
-    GdkPixbuf *rgba_pixbuf;
+    GdkPixbuf *composite_pixbuf;
     GList *l;
 
     if (self->template_image == NULL) return;
@@ -732,14 +749,17 @@ render_meme (MyappWindow *self)
     width = gdk_pixbuf_get_width (self->template_image);
     height = gdk_pixbuf_get_height (self->template_image);
 
-    if (!gdk_pixbuf_get_has_alpha (self->template_image))
-        rgba_pixbuf = gdk_pixbuf_add_alpha (self->template_image, FALSE, 0, 0, 0);
-    else
-        rgba_pixbuf = gdk_pixbuf_copy (self->template_image);
 
-    surface = cairo_image_surface_create_for_data (gdk_pixbuf_get_pixels (rgba_pixbuf),
-        CAIRO_FORMAT_ARGB32, width, height, gdk_pixbuf_get_rowstride (rgba_pixbuf));
+    surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
     cr = cairo_create (surface);
+
+
+    cairo_save (cr);
+    gdk_cairo_set_source_pixbuf (cr, self->template_image, 0.0, 0.0);
+    cairo_paint (cr);
+    cairo_restore (cr);
+
+
 
     for (l = self->layers; l != NULL; l = l->next) {
         ImageLayer *layer = (ImageLayer *)l->data;
@@ -789,6 +809,7 @@ render_meme (MyappWindow *self)
         cairo_restore (cr);
     }
 
+
     top_text = gtk_editable_get_text (GTK_EDITABLE (self->top_text_entry));
     bottom_text = gtk_editable_get_text (GTK_EDITABLE (self->bottom_text_entry));
 
@@ -807,26 +828,13 @@ render_meme (MyappWindow *self)
     cairo_destroy (cr);
 
 
-    {
-        unsigned char *pixels = gdk_pixbuf_get_pixels (rgba_pixbuf);
-        int rowstride = gdk_pixbuf_get_rowstride (rgba_pixbuf);
-        int n_channels = gdk_pixbuf_get_n_channels (rgba_pixbuf);
-        int x, y;
-
-        for (y = 0; y < height; y++) {
-            unsigned char *p = pixels + y * rowstride;
-            for (x = 0; x < width; x++) {
-                unsigned char tmp = p[0];
-                p[0] = p[2];
-                p[2] = tmp;
-                p += n_channels;
-            }
-        }
-    }
+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    composite_pixbuf = gdk_pixbuf_get_from_surface (surface, 0, 0, width, height);
+    G_GNUC_END_IGNORE_DEPRECATIONS
 
 
     g_clear_object (&self->final_meme);
-    self->final_meme = rgba_pixbuf;
+    self->final_meme = composite_pixbuf;
 
     G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     texture = gdk_texture_new_for_pixbuf (self->final_meme);
