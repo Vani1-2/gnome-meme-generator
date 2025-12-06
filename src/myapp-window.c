@@ -24,6 +24,14 @@
 #include <math.h>
 #include <glib/gstdio.h>
 
+
+
+/* Almighty God, forgive me for all of my wicked sins, I forsake my escape.
+ * I give up even Trisha, I belong here in hell and accept my just damnation,
+ * But grant me the power to keep your enemy here with me in Hell.
+ */
+
+
 typedef enum {
     DRAG_TYPE_NONE,
     DRAG_TYPE_TOP_TEXT,
@@ -95,6 +103,43 @@ static void on_drag_update (GtkGestureDrag *gesture, double offset_x, double off
 static void on_drag_end (GtkGestureDrag *gesture, double offset_x, double offset_y, MyappWindow *self);
 static void on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWindow *self);
 static void populate_template_gallery (MyappWindow *self);
+
+
+static void
+get_image_coordinates (MyappWindow *self, double widget_x, double widget_y, double *img_x, double *img_y)
+{
+    double ww, wh, iw, ih, scale, draw_w, draw_h, off_x, off_y;
+    double w_ratio, h_ratio;
+
+    if (!self->template_image) {
+        *img_x = 0; *img_y = 0; return;
+    }
+
+    ww = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
+    wh = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
+
+    if (ww <= 0 || wh <= 0) {
+        *img_x = 0; *img_y = 0; return;
+    }
+
+    iw = gdk_pixbuf_get_width (self->template_image);
+    ih = gdk_pixbuf_get_height (self->template_image);
+
+    w_ratio = ww / iw;
+    h_ratio = wh / ih;
+
+
+    scale = (w_ratio < h_ratio) ? w_ratio : h_ratio;
+
+    draw_w = iw * scale;
+    draw_h = ih * scale;
+
+    off_x = (ww - draw_w) / 2.0;
+    off_y = (wh - draw_h) / 2.0;
+
+    *img_x = (widget_x - off_x) / draw_w;
+    *img_y = (widget_y - off_y) / draw_h;
+}
 
 static void
 free_image_layer (gpointer data)
@@ -346,41 +391,63 @@ on_delete_template_clicked (MyappWindow *self)
 static void
 on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWindow *self)
 {
-    int img_w = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
-    int img_h = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
     double rel_x, rel_y;
+    double img_w, img_h;
+    double ww, wh, w_ratio, h_ratio, screen_scale;
     gboolean found_hover = FALSE;
     GList *l;
 
-    if (img_w <= 0 || img_h <= 0 || self->template_image == NULL) {
+    if (self->template_image == NULL) {
         gtk_widget_set_cursor (GTK_WIDGET (self->meme_preview), NULL);
         return;
     }
 
-    rel_x = x / img_w;
-    rel_y = y / img_h;
+    get_image_coordinates(self, x, y, &rel_x, &rel_y);
+    img_w = gdk_pixbuf_get_width(self->template_image);
+    img_h = gdk_pixbuf_get_height(self->template_image);
+
+
+    ww = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
+    wh = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
+    w_ratio = ww / img_w;
+    h_ratio = wh / img_h;
+    screen_scale = (w_ratio < h_ratio) ? w_ratio : h_ratio;
 
     for (l = g_list_last(self->layers); l != NULL; l = l->prev) {
         ImageLayer *layer = (ImageLayer *)l->data;
+        double half_w, half_h, left, right, top, bottom;
+        double corner_x, corner_y;
 
-        double scaled_w = layer->width * layer->scale;
-        double scaled_h = layer->height * layer->scale;
-        double layer_left = layer->x - (scaled_w / 2.0 / img_w);
-        double layer_right = layer->x + (scaled_w / 2.0 / img_w);
-        double layer_top = layer->y - (scaled_h / 2.0 / img_h);
-        double layer_bottom = layer->y + (scaled_h / 2.0 / img_h);
-        double corner = 0.05;
+        half_w = (layer->width * layer->scale) / 2.0 / img_w;
+        half_h = (layer->height * layer->scale) / 2.0 / img_h;
+
+        left = layer->x - half_w;
+        right = layer->x + half_w;
+        top = layer->y - half_h;
+        bottom = layer->y + half_h;
+
+
+        corner_x = 20.0 / (img_w * screen_scale);
+        corner_y = 20.0 / (img_h * screen_scale);
 
         if (layer == self->selected_layer) {
-            if (fabs(rel_x - layer_right) < corner && fabs(rel_y - layer_bottom) < corner) {
-                gtk_widget_set_cursor_from_name (GTK_WIDGET (self->meme_preview), "nw-se-resize");
+            gboolean near_left = fabs(rel_x - left) < corner_x;
+            gboolean near_right = fabs(rel_x - right) < corner_x;
+            gboolean near_top = fabs(rel_y - top) < corner_y;
+            gboolean near_bottom = fabs(rel_y - bottom) < corner_y;
+
+            if ((near_left || near_right) && (near_top || near_bottom)) {
+                if ((near_left && near_top) || (near_right && near_bottom))
+                    gtk_widget_set_cursor_from_name (GTK_WIDGET (self->meme_preview), "nw-se-resize");
+                else
+                    gtk_widget_set_cursor_from_name (GTK_WIDGET (self->meme_preview), "nesw-resize");
+
                 found_hover = TRUE;
                 break;
             }
         }
 
-        if (rel_x >= layer_left && rel_x <= layer_right &&
-            rel_y >= layer_top && rel_y <= layer_bottom) {
+        if (rel_x >= left && rel_x <= right && rel_y >= top && rel_y <= bottom) {
             gtk_widget_set_cursor_from_name (GTK_WIDGET (self->meme_preview), "move");
             found_hover = TRUE;
             break;
@@ -392,58 +459,78 @@ on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWi
     }
 }
 
+
+
+
 static void
 on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
 {
-    int img_h = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
-    int img_w = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
-    double rel_y = y / img_h;
-    double rel_x = x / img_w;
+    double rel_x, rel_y;
+    double img_w, img_h;
+    double ww, wh, w_ratio, h_ratio, screen_scale;
     GList *l;
-
     double top_fs, bottom_fs;
     double top_threshold, bottom_threshold;
     double dist_top, dist_bottom;
 
-    if (self->template_image == NULL || img_h <= 0 || img_w <= 0) return;
+    if (self->template_image == NULL) return;
+
+    get_image_coordinates(self, x, y, &rel_x, &rel_y);
+    img_w = gdk_pixbuf_get_width(self->template_image);
+    img_h = gdk_pixbuf_get_height(self->template_image);
+
+
+    ww = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
+    wh = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
+    w_ratio = ww / img_w;
+    h_ratio = wh / img_h;
+    screen_scale = (w_ratio < h_ratio) ? w_ratio : h_ratio;
 
     for (l = g_list_last(self->layers); l != NULL; l = l->prev) {
         ImageLayer *layer = (ImageLayer *)l->data;
+        double half_w, half_h, left, right, top, bottom;
+        double corner_x, corner_y;
 
-        double scaled_w = layer->width * layer->scale;
-        double scaled_h = layer->height * layer->scale;
-        double layer_left = layer->x - (scaled_w / 2.0 / img_w);
-        double layer_right = layer->x + (scaled_w / 2.0 / img_w);
-        double layer_top = layer->y - (scaled_h / 2.0 / img_h);
-        double layer_bottom = layer->y + (scaled_h / 2.0 / img_h);
-        double corner = 0.05;
+        half_w = (layer->width * layer->scale) / 2.0 / img_w;
+        half_h = (layer->height * layer->scale) / 2.0 / img_h;
 
-        if (layer == self->selected_layer &&
-            fabs(rel_x - layer_right) < corner &&
-            fabs(rel_y - layer_bottom) < corner) {
+        left = layer->x - half_w;
+        right = layer->x + half_w;
+        top = layer->y - half_h;
+        bottom = layer->y + half_h;
 
-            self->drag_type = DRAG_TYPE_IMAGE_RESIZE;
-            self->selected_layer = layer;
-            self->drag_obj_start_scale = layer->scale;
-            self->drag_start_x = x;
-            self->drag_start_y = y;
-            render_meme(self);
-            return;
+
+        corner_x = 20.0 / (img_w * screen_scale);
+        corner_y = 20.0 / (img_h * screen_scale);
+
+        if (layer == self->selected_layer) {
+            gboolean near_corner =
+                (fabs(rel_x - left) < corner_x || fabs(rel_x - right) < corner_x) &&
+                (fabs(rel_y - top) < corner_y || fabs(rel_y - bottom) < corner_y);
+
+            if (near_corner) {
+                self->drag_type = DRAG_TYPE_IMAGE_RESIZE;
+                self->selected_layer = layer;
+                self->drag_obj_start_scale = layer->scale;
+                self->drag_start_x = rel_x * img_w;
+                self->drag_start_y = rel_y * img_h;
+                render_meme(self);
+                return;
+            }
         }
 
-        if (rel_x >= layer_left && rel_x <= layer_right &&
-            rel_y >= layer_top && rel_y <= layer_bottom) {
-
+        if (rel_x >= left && rel_x <= right && rel_y >= top && rel_y <= bottom) {
             self->drag_type = DRAG_TYPE_IMAGE_MOVE;
             self->selected_layer = layer;
             self->drag_obj_start_x = layer->x;
             self->drag_obj_start_y = layer->y;
-            self->drag_start_x = x;
-            self->drag_start_y = y;
+            self->drag_start_x = rel_x;
+            self->drag_start_y = rel_y;
             render_meme(self);
             return;
         }
     }
+
 
     top_fs = gtk_spin_button_get_value (self->top_text_size);
     bottom_fs = gtk_spin_button_get_value (self->bottom_text_size);
@@ -467,30 +554,67 @@ on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
         self->selected_layer = NULL;
     }
 
-    self->drag_start_x = x;
-    self->drag_start_y = y;
+    self->drag_start_x = rel_x;
+    self->drag_start_y = rel_y;
     render_meme(self);
 }
+
+
+
+
+
+
+
+
 
 static void
 on_drag_update (GtkGestureDrag *gesture, double offset_x, double offset_y, MyappWindow *self)
 {
-    int img_h = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
-    int img_w = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
     double delta_x, delta_y;
+    double img_w, img_h;
+    double ww, wh, w_ratio, h_ratio, scale;
 
     if (self->drag_type == DRAG_TYPE_NONE || self->template_image == NULL) return;
 
-    delta_x = offset_x / (double)img_w;
-    delta_y = offset_y / (double)img_h;
+    img_w = gdk_pixbuf_get_width(self->template_image);
+    img_h = gdk_pixbuf_get_height(self->template_image);
+
+    ww = gtk_widget_get_width (GTK_WIDGET (self->meme_preview));
+    wh = gtk_widget_get_height (GTK_WIDGET (self->meme_preview));
+    w_ratio = ww / img_w;
+    h_ratio = wh / img_h;
+    scale = (w_ratio < h_ratio) ? w_ratio : h_ratio;
+
+    delta_x = (offset_x / scale) / img_w;
+    delta_y = (offset_y / scale) / img_h;
 
     if (self->drag_type == DRAG_TYPE_IMAGE_MOVE && self->selected_layer) {
         self->selected_layer->x = CLAMP (self->drag_obj_start_x + delta_x, 0.0, 1.0);
         self->selected_layer->y = CLAMP (self->drag_obj_start_y + delta_y, 0.0, 1.0);
     }
     else if (self->drag_type == DRAG_TYPE_IMAGE_RESIZE && self->selected_layer) {
-        double scale_change = (offset_x + offset_y) / 200.0;
-        self->selected_layer->scale = CLAMP (self->drag_obj_start_scale + scale_change, 0.1, 5.0);
+        double cx, cy, start_dx, start_dy, start_dist;
+        double current_img_x, current_img_y, cur_dx, cur_dy, cur_dist;
+
+        cx = self->selected_layer->x * img_w;
+        cy = self->selected_layer->y * img_h;
+
+        start_dx = self->drag_start_x - cx;
+        start_dy = self->drag_start_y - cy;
+        start_dist = sqrt(start_dx*start_dx + start_dy*start_dy);
+
+        current_img_x = self->drag_start_x + (offset_x / scale);
+        current_img_y = self->drag_start_y + (offset_y / scale);
+
+        cur_dx = current_img_x - cx;
+        cur_dy = current_img_y - cy;
+        cur_dist = sqrt(cur_dx*cur_dx + cur_dy*cur_dy);
+
+
+        if (start_dist > 5.0) {
+            double ratio = cur_dist / start_dist;
+            self->selected_layer->scale = CLAMP (self->drag_obj_start_scale * ratio, 0.1, 5.0);
+        }
     }
     else if (self->drag_type == DRAG_TYPE_TOP_TEXT) {
         self->top_text_x = CLAMP (self->drag_obj_start_x + delta_x, 0.0, 1.0);
@@ -503,6 +627,9 @@ on_drag_update (GtkGestureDrag *gesture, double offset_x, double offset_y, Myapp
 
     render_meme (self);
 }
+
+
+
 
 static void on_drag_end (GtkGestureDrag *gesture, double offset_x, double offset_y, MyappWindow *self) {
     self->drag_type = DRAG_TYPE_NONE;
@@ -626,26 +753,38 @@ render_meme (MyappWindow *self)
         draw_y = layer->y * height - scaled_h / 2.0;
 
         cairo_save (cr);
-        cairo_translate (cr, draw_x, draw_y);
+        cairo_translate (cr, draw_x + scaled_w / 2.0, draw_y + scaled_h / 2.0);
 
         cairo_save (cr);
         cairo_scale (cr, layer->scale, layer->scale);
-        gdk_cairo_set_source_pixbuf (cr, layer->pixbuf, 0, 0);
+        gdk_cairo_set_source_pixbuf (cr, layer->pixbuf, -layer->width/2.0, -layer->height/2.0);
         cairo_paint (cr);
         cairo_restore (cr);
 
         if (layer == self->selected_layer) {
-            cairo_set_source_rgba (cr, 0.2, 0.4, 1.0, 0.8);
+            double hw = scaled_w / 2.0;
+            double hh = scaled_h / 2.0;
+            double handles_x[4];
+            double handles_y[4];
+            int i;
+
+            handles_x[0] = -hw; handles_x[1] = hw; handles_x[2] = -hw; handles_x[3] = hw;
+            handles_y[0] = -hh; handles_y[1] = -hh; handles_y[2] = hh; handles_y[3] = hh;
+
+            cairo_set_source_rgba (cr, 0.4, 0.2, 0.8, 0.8);
             cairo_set_line_width (cr, 2.0);
-            cairo_rectangle (cr, 0, 0, scaled_w, scaled_h);
+            cairo_rectangle (cr, -hw, -hh, scaled_w, scaled_h);
             cairo_stroke (cr);
 
-            cairo_arc (cr, scaled_w, scaled_h, 8, 0, 2 * M_PI);
             cairo_set_source_rgb (cr, 1, 1, 1);
-            cairo_fill_preserve (cr);
-            cairo_set_source_rgba (cr, 0.2, 0.4, 1.0, 1.0);
-            cairo_set_line_width (cr, 2.0);
-            cairo_stroke (cr);
+
+            for (i = 0; i < 4; i++) {
+                cairo_new_sub_path (cr);
+                cairo_arc (cr, handles_x[i], handles_y[i], 6, 0, 2 * M_PI);
+                cairo_fill_preserve (cr);
+                cairo_set_source_rgba (cr, 0.4, 0.2, 0.8, 1.0);
+                cairo_stroke (cr);
+            }
         }
         cairo_restore (cr);
     }
@@ -730,3 +869,9 @@ static void on_export_clicked (MyappWindow *self) {
     gtk_file_dialog_set_initial_name (dialog, "meme.png");
     gtk_file_dialog_save (dialog, GTK_WINDOW (self), NULL, on_export_response, self);
 }
+
+
+
+
+
+

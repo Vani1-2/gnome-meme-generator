@@ -9,6 +9,7 @@ myapp_deps = [
   dependency('gtk4'),
   dependency('libadwaita-1', version: '>= 1.4'),
   dependency('cairo'),
+  cc.find_library('m'),
 ]
 
 myapp_sources += gnome.compile_resources('myapp-resources',
