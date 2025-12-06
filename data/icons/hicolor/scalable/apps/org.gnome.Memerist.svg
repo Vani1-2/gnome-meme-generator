@@ -1,20 +1,18 @@
 <svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#f6f5f4;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="headerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#deddda;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#c0bfbc;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="imageGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+    <linearGradient id="baseGradient" x1="50%" y1="0%" x2="50%" y2="100%">
       <stop offset="0%" style="stop-color:#62a0ea;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#3584e4;stop-opacity:1" />
     </linearGradient>
-    <filter id="shadow">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-      <feOffset dx="0" dy="2" result="offsetblur"/>
+
+    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f9f06b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f6d32d;stop-opacity:1" />
+    </linearGradient>
+
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
       <feComponentTransfer>
         <feFuncA type="linear" slope="0.3"/>
       </feComponentTransfer>
@@ -23,12 +21,11 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <filter id="innerShadow">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
-      <feOffset dx="0" dy="1" result="offsetblur"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="0.2"/>
-      </feComponentTransfer>
+
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feFlood flood-color="#000000" flood-opacity="0.4" result="color"/>
+      <feComposite in="color" in2="SourceAlpha" operator="in" result="shadow"/>
+      <feOffset dx="0" dy="1"/>
       <feMerge>
         <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
@@ -36,40 +33,32 @@
     </filter>
   </defs>
 
+  <g filter="url(#shadow)">
+    <rect x="16" y="16" width="96" height="96" rx="8" ry="8" fill="url(#baseGradient)"/>
 
-  <rect x="8" y="8" width="112" height="112" rx="12" ry="12"
-        fill="url(#bgGradient)" filter="url(#shadow)"/>
+    <circle cx="80" cy="40" r="12" fill="url(#sunGradient)" opacity="0.9"/>
+    <path d="M 16 80 L 40 50 L 70 90 L 90 70 L 112 100 V 104 H 16 Z" fill="#1c71d8" opacity="0.5"/>
+    <path d="M 16 112 L 16 90 L 50 112 Z" fill="#1a5fb4" opacity="0.4"/>
 
+    <rect x="16" y="16" width="96" height="96" rx="8" ry="8"
+          fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
 
-  <rect x="8" y="8" width="112" height="20" rx="12" ry="12"
-        fill="url(#headerGradient)"/>
-  <rect x="8" y="18" width="112" height="10"
-        fill="url(#headerGradient)"/>
+    <path d="M 24 17 H 104 A 7 7 0 0 1 111 24 V 104 A 7 7 0 0 1 104 111 H 24 A 7 7 0 0 1 17 104 V 24 A 7 7 0 0 1 24 17 Z"
+          fill="none" stroke="white" stroke-opacity="0.15" stroke-width="1"/>
+  </g>
 
+  <g filter="url(#textShadow)">
+    <rect x="26" y="26" width="76" height="10" rx="2" fill="white"/>
+    <rect x="26" y="92" width="76" height="10" rx="2" fill="white"/>
+  </g>
 
-  <circle cx="18" cy="16" r="3" fill="#f66151"/>
-  <circle cx="28" cy="16" r="3" fill="#f9f06b"/>
-  <circle cx="38" cy="16" r="3" fill="#8ff0a4"/>
+  <g transform="translate(0, 0)">
+    <rect x="12" y="12" width="104" height="104" rx="10" fill="none" stroke="#99c1f1" stroke-width="2" stroke-dasharray="8 4"/>
 
+    <circle cx="12" cy="12" r="6" fill="#ffffff" stroke="#3584e4" stroke-width="2" filter="url(#shadow)"/>
+    <circle cx="116" cy="12" r="6" fill="#ffffff" stroke="#3584e4" stroke-width="2" filter="url(#shadow)"/>
+    <circle cx="12" cy="116" r="6" fill="#ffffff" stroke="#3584e4" stroke-width="2" filter="url(#shadow)"/>
+    <circle cx="116" cy="116" r="6" fill="#ffffff" stroke="#3584e4" stroke-width="2" filter="url(#shadow)"/>
+  </g>
 
-  <rect x="14" y="32" width="32" height="80" rx="6"
-        fill="#ffffff" opacity="0.6" filter="url(#innerShadow)"/>
-
-
-  <rect x="18" y="36" width="24" height="8" rx="4" fill="#3584e4"/>
-  <rect x="18" y="48" width="24" height="6" rx="3" fill="#deddda"/>
-  <rect x="18" y="57" width="24" height="6" rx="3" fill="#deddda"/>
-  <rect x="18" y="68" width="24" height="8" rx="4" fill="#c0bfbc"/>
-
-
-  <rect x="50" y="36" width="62" height="70" rx="8"
-        fill="url(#imageGradient)" filter="url(#innerShadow)"/>
-
-
-  <path d="M 50 94 L 60 82 L 72 90 L 90 70 L 112 94 Z"
-        fill="#1c71d8" opacity="0.4"/>
-  <circle cx="100" cy="50" r="6" fill="#f9f06b" opacity="0.5"/>
-
-  <rect x="8" y="8" width="112" height="112" rx="12" ry="12"
-        fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
 </svg>
