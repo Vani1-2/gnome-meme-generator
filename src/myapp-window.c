@@ -141,6 +141,9 @@ get_image_coordinates (MyappWindow *self, double widget_x, double widget_y, doub
   *img_y = (widget_y - off_y) / draw_h;
 }
 
+
+
+
 static void
 free_image_layer (gpointer data)
 {
@@ -192,6 +195,12 @@ myapp_window_class_init (MyappWindowClass *klass)
   gtk_widget_class_bind_template_child (widget_class, MyappWindow, template_gallery);
 }
 
+
+
+
+
+
+//file drag and drop
 static gboolean
 on_drop_file (GtkDropTarget *target, const GValue *value, double x, double y, MyappWindow *self)
 {
@@ -438,6 +447,11 @@ on_delete_template_clicked (MyappWindow *self)
   gtk_alert_dialog_choose (dialog, GTK_WINDOW (self), NULL, on_delete_confirm_response, self);
 }
 
+
+
+
+
+//follow mouse
 static void
 on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWindow *self)
 {
@@ -507,6 +521,14 @@ on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWi
   }
 }
 
+
+
+
+
+
+
+
+//drag logic
 static void
 on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
 {
@@ -601,6 +623,12 @@ on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
   render_meme(self);
 }
 
+
+
+
+
+
+//finalize text position
 static void
 on_drag_update (GtkGestureDrag *gesture, double offset_x, double offset_y, MyappWindow *self)
 {
@@ -700,6 +728,12 @@ on_add_image_response (GObject *source, GAsyncResult *result, gpointer user_data
   g_free (path); g_object_unref (file);
 }
 
+
+
+
+
+
+// function for add images
 static void on_add_image_clicked (MyappWindow *self) {
   GtkFileDialog *dialog = gtk_file_dialog_new ();
   GtkFileFilter *filter = gtk_file_filter_new ();
@@ -735,6 +769,8 @@ static void on_clear_clicked (MyappWindow *self) {
   gtk_flow_box_unselect_all (self->template_gallery);
 }
 
+
+
 static void
 draw_text_with_outline (cairo_t *cr, const char *text, double x, double y, double font_size)
 {
@@ -749,6 +785,8 @@ draw_text_with_outline (cairo_t *cr, const char *text, double x, double y, doubl
   cairo_set_source_rgb (cr, 1, 1, 1); cairo_move_to (cr, x, y); cairo_show_text (cr, text);
 }
 
+
+//apply filter
 static GdkPixbuf *
 apply_deep_fry (GdkPixbuf *src)
 {
@@ -796,7 +834,7 @@ apply_deep_fry (GdkPixbuf *src)
 
 
 
-
+//render function
 static void
 render_meme (MyappWindow *self)
 {
@@ -907,10 +945,16 @@ render_meme (MyappWindow *self)
   cairo_surface_destroy (surface);
 }
 
+
+
+//butto for deep fry
 static void on_deep_fry_toggled (GtkToggleButton *btn, MyappWindow *self) {
   if (self->template_image) render_meme (self);
 }
 
+
+
+//Deep Fry LMAO, Tangina mo
 static void on_load_image_response (GObject *s, GAsyncResult *r, gpointer d) {
   GtkFileDialog *dialog = GTK_FILE_DIALOG (s);
   MyappWindow *self = MYAPP_WINDOW (d);
@@ -935,7 +979,7 @@ static void on_load_image_response (GObject *s, GAsyncResult *r, gpointer d) {
   }
   g_free (path); g_object_unref (file);
 }
-
+//image click function
 static void on_load_image_clicked (MyappWindow *self) {
   GtkFileDialog *dialog = gtk_file_dialog_new ();
   GtkFileFilter *filter = gtk_file_filter_new ();
