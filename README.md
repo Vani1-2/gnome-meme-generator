@@ -54,9 +54,9 @@ sudo dnf install memerist
 ### Debian/Ubuntu
 Download the latest `.deb` file using this command( only available as amd64 )
 ```bash
-curl -SL https://raw.githubusercontent.com/Vani1-2/gnome-meme-editor/main/install.sh | bash
+curl -SL https://raw.githubusercontent.com/Vani1-2/gnome-meme-editor/main/install-deb.sh | bash
 ```
-
+### Arch Linux and derivatives
 
 
 ## Building from Source
