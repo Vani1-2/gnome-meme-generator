@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+meson compile -C build
+
+
 
 SPEC_FILE="memerist.spec"
 CONTROL_FILE="deb-build/memerist-amd64/DEBIAN/control"
