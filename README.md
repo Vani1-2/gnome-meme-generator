@@ -63,7 +63,7 @@ sudo apt install ./memerist-amd64.deb
 or just double click the `.deb` file and let your software manager do install it.
 
 
-### Building from Source
+## Building from Source
 
 #### Prerequisites
 
