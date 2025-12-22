@@ -57,6 +57,10 @@ Download the latest `.deb` file using this command( only available as amd64 )
 curl -SL https://raw.githubusercontent.com/Vani1-2/gnome-meme-editor/main/install-deb.sh | bash
 ```
 ### Arch Linux and derivatives
+You arch users know this, its very simple.
+```bash
+curl -SL https://raw.githubusercontent.com/Vani1-2/gnome-meme-editor/main/install-archlinux.sh | bash
+```
 
 
 ## Building from Source
