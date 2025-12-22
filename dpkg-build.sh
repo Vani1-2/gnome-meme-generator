@@ -16,7 +16,7 @@ Version: ${VERSION}-${RELEASE}
 Section: utils
 Priority: optional
 Architecture: amd64
-Depends: libgtk-4-1, libglib2.0-0
+Depends: libgtk-4-1, libglib2.0-0, libadwaita-1-0
 Maintainer: Vani1-2 <giovannirafanan609@gmail.com>
 Description: Meme editor for the GNOME Desktop
 EOF
