@@ -129,8 +129,7 @@ static void on_delete_layer_clicked (MyappWindow *self);
 static void sync_ui_with_layer(MyappWindow *self);
 
 static void
-get_image_coordinates (MyappWindow *self, double widget_x, double widget_y, double *img_x, double *img_y)
-{
+get_image_coordinates (MyappWindow *self, double widget_x, double widget_y, double *img_x, double *img_y) {
   double ww, wh, iw, ih, scale, draw_w, draw_h, off_x, off_y;
   double w_ratio, h_ratio;
 
@@ -164,8 +163,7 @@ get_image_coordinates (MyappWindow *self, double widget_x, double widget_y, doub
 }
 
 static void
-free_image_layer (gpointer data)
-{
+free_image_layer (gpointer data) {
   ImageLayer *layer = (ImageLayer *)data;
   if (layer) {
     if (layer->pixbuf)
@@ -175,8 +173,7 @@ free_image_layer (gpointer data)
 }
 
 static void
-myapp_window_finalize (GObject *object)
-{
+myapp_window_finalize (GObject *object) {
   MyappWindow *self = MYAPP_WINDOW (object);
 
   g_clear_object (&self->template_image);
@@ -191,8 +188,7 @@ myapp_window_finalize (GObject *object)
 }
 
 static void
-myapp_window_class_init (MyappWindowClass *klass)
-{
+myapp_window_class_init (MyappWindowClass *klass) {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -223,8 +219,7 @@ myapp_window_class_init (MyappWindowClass *klass)
 
 //file drag and drop
 static gboolean
-on_drop_file (GtkDropTarget *target, const GValue *value, double x, double y, MyappWindow *self)
-{
+on_drop_file (GtkDropTarget *target, const GValue *value, double x, double y, MyappWindow *self) {
   GSList *list;
   GFile *file;
   char *path;
@@ -264,8 +259,7 @@ on_drop_file (GtkDropTarget *target, const GValue *value, double x, double y, My
 }
 
 static void
-myapp_window_init (MyappWindow *self)
-{
+myapp_window_init (MyappWindow *self) {
   GtkEventController *motion;
   GtkDropTarget *target;
 
@@ -340,8 +334,7 @@ sync_ui_with_layer(MyappWindow *self) {
 
 
 static void
-on_layer_control_changed (MyappWindow *self)
-{
+on_layer_control_changed (MyappWindow *self) {
   if (self->selected_layer) {
      self->selected_layer->opacity = gtk_range_get_value(GTK_RANGE(self->layer_opacity_scale));
      self->selected_layer->rotation = gtk_range_get_value(GTK_RANGE(self->layer_rotation_scale));
@@ -351,8 +344,7 @@ on_layer_control_changed (MyappWindow *self)
 }
 
 static void
-on_delete_layer_clicked (MyappWindow *self)
-{
+on_delete_layer_clicked (MyappWindow *self) {
   if (self->selected_layer) {
     self->layers = g_list_remove(self->layers, self->selected_layer);
     free_image_layer(self->selected_layer);
@@ -363,21 +355,18 @@ on_delete_layer_clicked (MyappWindow *self)
 }
 
 static char *
-get_user_template_dir (void)
-{
+get_user_template_dir (void) {
 return g_build_filename (g_get_user_data_dir (), "io.github.vani1_2.memerist", "templates", NULL);
 }
 
 static gboolean
-is_user_template (const char *path)
-{
+is_user_template (const char *path) {
   g_autofree char *user_dir = get_user_template_dir ();
   return g_str_has_prefix (path, user_dir);
 }
 
 static void
-add_file_to_gallery (MyappWindow *self, const char *full_path)
-{
+add_file_to_gallery (MyappWindow *self, const char *full_path) {
   GtkWidget *picture;
 
 
@@ -397,8 +386,7 @@ add_file_to_gallery (MyappWindow *self, const char *full_path)
 
 
 static void
-scan_directory_for_templates (MyappWindow *self, const char *dir_path)
-{
+scan_directory_for_templates (MyappWindow *self, const char *dir_path) {
   GDir *dir = g_dir_open (dir_path, 0, NULL);
   const char *filename;
   if (!dir) return;
@@ -414,8 +402,7 @@ scan_directory_for_templates (MyappWindow *self, const char *dir_path)
 
 
 static void
-scan_resources_for_templates (MyappWindow *self)
-{
+scan_resources_for_templates (MyappWindow *self) {
   GError *error = NULL;
 
   const char *res_path = "/io/github/vani1_2/memerist/templates";
@@ -433,10 +420,8 @@ scan_resources_for_templates (MyappWindow *self)
 
 
 
-
 static void
-populate_template_gallery (MyappWindow *self)
-{
+populate_template_gallery (MyappWindow *self) {
   char *user_dir;
   scan_resources_for_templates (self);
   user_dir = get_user_template_dir ();
@@ -447,8 +432,7 @@ populate_template_gallery (MyappWindow *self)
 
 
 static void
-on_template_selected (GtkFlowBox *flowbox, GtkFlowBoxChild *child, MyappWindow *self)
-{
+on_template_selected (GtkFlowBox *flowbox, GtkFlowBoxChild *child, MyappWindow *self) {
   GtkWidget *image;
   const char *template_path;
   GError *error = NULL;
@@ -487,8 +471,7 @@ on_template_selected (GtkFlowBox *flowbox, GtkFlowBoxChild *child, MyappWindow *
 
 
 static void
-on_import_template_response (GObject *s, GAsyncResult *r, gpointer d)
-{
+on_import_template_response (GObject *s, GAsyncResult *r, gpointer d) {
   GtkFileDialog *dialog = GTK_FILE_DIALOG (s);
   MyappWindow *self = MYAPP_WINDOW (d);
   GFile *source_file, *dest_file;
@@ -515,8 +498,7 @@ on_import_template_response (GObject *s, GAsyncResult *r, gpointer d)
 
 
 static void
-on_import_template_clicked (MyappWindow *self)
-{
+on_import_template_clicked (MyappWindow *self) {
   GtkFileDialog *dialog = gtk_file_dialog_new ();
   GtkFileFilter *filter = gtk_file_filter_new ();
   GListStore *filters = g_list_store_new (GTK_TYPE_FILE_FILTER);
@@ -534,8 +516,7 @@ on_import_template_clicked (MyappWindow *self)
 
 
 static void
-on_delete_confirm_response (GObject *s, GAsyncResult *r, gpointer d)
-{
+on_delete_confirm_response (GObject *s, GAsyncResult *r, gpointer d) {
   GtkAlertDialog *dialog = GTK_ALERT_DIALOG (s);
   MyappWindow *self = MYAPP_WINDOW (d);
   GError *error = NULL;
@@ -559,8 +540,7 @@ on_delete_confirm_response (GObject *s, GAsyncResult *r, gpointer d)
 
 
 static void
-on_delete_template_clicked (MyappWindow *self)
-{
+on_delete_template_clicked (MyappWindow *self) {
   GtkAlertDialog *dialog = gtk_alert_dialog_new ("Delete this template?");
   gtk_alert_dialog_set_buttons (dialog, (const char *[]) {"Cancel", "Delete", NULL});
   gtk_alert_dialog_set_default_button (dialog, 1);
@@ -569,8 +549,7 @@ on_delete_template_clicked (MyappWindow *self)
 
 //follow mouse
 static void
-on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWindow *self)
-{
+on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWindow *self) {
   double rel_x, rel_y;
   double img_w, img_h;
   double ww, wh, w_ratio, h_ratio, screen_scale;
@@ -640,8 +619,7 @@ on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWi
 
 //drag logic
 static void
-on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
-{
+on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self) {
   double rel_x, rel_y;
   double img_w, img_h;
   double ww, wh, w_ratio, h_ratio, screen_scale;
@@ -746,8 +724,7 @@ on_drag_begin (GtkGestureDrag *gesture, double x, double y, MyappWindow *self)
 
 //finalize text position
 static void
-on_drag_update (GtkGestureDrag *gesture, double offset_x, double offset_y, MyappWindow *self)
-{
+on_drag_update (GtkGestureDrag *gesture, double offset_x, double offset_y, MyappWindow *self) {
   double delta_x, delta_y;
   double img_w, img_h;
   double ww, wh, w_ratio, h_ratio, scale;
@@ -813,8 +790,7 @@ static void on_drag_end (GtkGestureDrag *gesture, double offset_x, double offset
 static void on_text_changed (MyappWindow *self) { if (self->template_image) render_meme (self); }
 
 static void
-on_add_image_response (GObject *source, GAsyncResult *result, gpointer user_data)
-{
+on_add_image_response (GObject *source, GAsyncResult *result, gpointer user_data) {
   GtkFileDialog *dialog = GTK_FILE_DIALOG (source);
   MyappWindow *self = MYAPP_WINDOW (user_data);
   GFile *file;
@@ -889,8 +865,7 @@ static void on_clear_clicked (MyappWindow *self) {
 }
 
 static void
-draw_text_with_outline (cairo_t *cr, const char *text, double x, double y, double font_size)
-{
+draw_text_with_outline (cairo_t *cr, const char *text, double x, double y, double font_size) {
   cairo_text_extents_t extents;
   cairo_select_font_face (cr, "Impact", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
   cairo_set_font_size (cr, font_size);
@@ -904,8 +879,7 @@ draw_text_with_outline (cairo_t *cr, const char *text, double x, double y, doubl
 
 
 static GdkPixbuf *
-apply_saturation_contrast (GdkPixbuf *src, double sat, double contrast)
-{
+apply_saturation_contrast (GdkPixbuf *src, double sat, double contrast) {
   GdkPixbuf *copy;
   int w, h, stride, n_channels;
   int x, y;
@@ -953,8 +927,7 @@ apply_saturation_contrast (GdkPixbuf *src, double sat, double contrast)
 
 //apply filter (Deep Fry)
 static GdkPixbuf *
-apply_deep_fry (GdkPixbuf *src)
-{
+apply_deep_fry (GdkPixbuf *src) {
   GdkPixbuf *fried = gdk_pixbuf_copy (src);
   int width = gdk_pixbuf_get_width (fried);
   int height = gdk_pixbuf_get_height (fried);
@@ -1017,8 +990,7 @@ apply_deep_fry (GdkPixbuf *src)
 // ngl this is too long, I'm too lazy to refactor this
 // pls send help
 static void
-render_meme (MyappWindow *self)
-{
+render_meme (MyappWindow *self) {
   const char *top_text, *bottom_text;
   int width, height;
   cairo_surface_t *surface;
