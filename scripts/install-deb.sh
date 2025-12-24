@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-URL="https://raw.githubusercontent.com/Vani1-2/gnome-meme-editor/main/deb-build/memerist-amd64.deb"
+URL="https://github.com/Vani1-2/gnome-meme-editor/releases/latest/download/"
 FILE="memerist-amd64.deb"
 
 
