@@ -1,15 +1,24 @@
 #!/bin/bash
 set -e
-meson compile -C build
 
 
+BUILD_DIR="$HOME/Projects/practice-gnome-app/build"
+DEB_ROOT="$HOME/Projects/deb-build/memerist-amd64"
 SPEC_FILE="memerist.spec"
-CONTROL_FILE="deb-build/memerist-amd64/DEBIAN/control"
+CONTROL_FILE="$DEB_ROOT/DEBIAN/control"
 
-VERSION=$(grep "^Version:" $SPEC_FILE | awk '{print $2}')
-RELEASE=$(grep "^Release:" $SPEC_FILE | awk '{print $2}' | sed 's/%{?dist}//')
 
-cat > $CONTROL_FILE << EOF
+mkdir -p "$DEB_ROOT/DEBIAN"
+mkdir -p "$DEB_ROOT/usr/bin"
+
+meson compile -C "$BUILD_DIR"
+
+
+VERSION=$(grep "^Version:" "$SPEC_FILE" | awk '{print $2}')
+RELEASE=$(grep "^Release:" "$SPEC_FILE" | awk '{print $2}' | sed 's/%{?dist}//')
+
+
+cat << EOF > "$CONTROL_FILE"
 Package: memerist
 Version: ${VERSION}-${RELEASE}
 Section: utils
@@ -21,20 +30,9 @@ Description: Meme editor for the GNOME Desktop
 EOF
 
 
-# NOTE: Uncomment this if you're on a Debian based system!!!!!
-
-# cp build/src/memerist deb-build/memerist-amd64/usr/bin/
-# dpkg-deb --build deb-build/memerist-amd64
-
-
-
-
-# NOTE: All of the code below should be commented or removed if you are on debian
-# system as you only need this if you have distrobox with an ubuntu image to build
-# a native .deb package
-distrobox enter Ubuntu -- bash -c '
-  cp build/src/memerist deb-build/memerist-amd64/usr/bin/
-  dpkg-deb --build deb-build/memerist-amd64
-'
+distrobox enter Ubuntu -- bash -c "
+  cp $BUILD_DIR/src/memerist $DEB_ROOT/usr/bin/
+  dpkg-deb --build $DEB_ROOT
+"
 
 distrobox-stop Ubuntu -Y

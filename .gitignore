@@ -1,5 +1,3 @@
 _build
 .flatpak-builder
-deb-build/
-deb-build/memerist-amd64.deb
 PKGBUILD
