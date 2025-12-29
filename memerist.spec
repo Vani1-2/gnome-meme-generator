@@ -1,5 +1,5 @@
 Name:           memerist
-Version:        0.1.3
+Version:        0.1.4
 Release:        1%{?dist}
 Summary:        Meme generator with text overlays
 License:        GPL-3.0-or-later
@@ -31,5 +31,5 @@ Create memes with custom text overlays using a native GNOME interface.
 
 
 %changelog
-* Sun Dec 07 2025 Vani1-2 <giovannirafanan609@gmail.com> - 0.1.3-1
-- app icon tweaks
+* Sun Dec 07 2025 Vani1-2 <giovannirafanan609@gmail.com> - 0.1.4-1
+- Major UI redesign & and functions optimization
