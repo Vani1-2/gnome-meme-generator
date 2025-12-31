@@ -56,8 +56,11 @@ sudo dnf install memerist
 ```
 ### Debian/Ubuntu
 
-- Option 1: Download the latest build on the [Releases page](https://github.com/Vani1-2/gnome-meme-editor/releases)
-- Option 2: Enable the dedicated [APT Repository](https://vani1-2.github.io/vani-pkgs)
+Add the dedicated repository to your sources:
+[**APT Repository**](https://vani1-2.github.io/vani-pkgs)
+
+
+
 
 ### Arch Linux and derivatives
 You arch users know this, its very simple.
