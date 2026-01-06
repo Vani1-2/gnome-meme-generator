@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <gresources>
   <gresource prefix="/io/github/vani1_2/memerist">
     <file preprocess="xml-stripblanks">myapp-window.ui</file>
@@ -18,5 +18,7 @@
     <file>templates/template13.jpg</file>
     <file>templates/template14.jpg</file>
     <file>templates/template15.jpg</file>
+    <file>templates/template16.jpg</file>
+    <file>templates/template17.png</file>
   </gresource>
 </gresources>
