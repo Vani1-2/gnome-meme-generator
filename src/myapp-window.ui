@@ -168,7 +168,7 @@
                     <child>
                       <object class="GtkMenuButton">
                         <property name="icon-name">applications-graphics-symbolic</property>
-                        <property name="tooltip-text">Global Effects</property>
+                        <property name="tooltip-text">Global Filters</property>
                         <property name="direction">right</property>
                         <property name="popover">
                           <object class="GtkPopover">
