@@ -44,10 +44,10 @@
   </screenshot>
 </screenshots>
   <releases>
-    <release version="0.2.1" date="2026-1-6">
+    <release version="0.2.2" date="2026-1-9">
       <description translate="no">
         <ul>
-          <li>added new templates</li>
+          <li> moved the delete layer button on the floating sidebar </li>
         </ul>
       </description>
     </release>
