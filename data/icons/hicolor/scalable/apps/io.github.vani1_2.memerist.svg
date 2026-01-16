@@ -5,10 +5,6 @@
       <stop offset="0" style="stop-color:#62a0ea;stop-opacity:1"/>
       <stop offset="1" style="stop-color:#3584e4;stop-opacity:1"/>
     </linearGradient>
-    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0" style="stop-color:#f9f06b;stop-opacity:1"/>
-      <stop offset="1" style="stop-color:#f6d32d;stop-opacity:1"/>
-    </linearGradient>
     <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
       <feOffset dx="0" dy="4" result="offsetblur"/>
@@ -20,16 +16,25 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <linearGradient id="sunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0" style="stop-color:#f9f06b;stop-opacity:1"/>
+      <stop offset="1" style="stop-color:#e5a50a;stop-opacity:1"/>
+    </linearGradient>
   </defs>
-  <g filter="url(#shadow)">
+  <g filter="url(#shadow)" style="">
     <rect x="16" y="16" width="96" height="96" rx="8" ry="8" fill="url(#baseGradient)"/>
-    <circle cx="80" cy="40" r="12" fill="url(#sunGradient)" opacity="0.9"/>
-    <path d="M 15.379 86.426 L 39.089 56.593 L 68.728 96.37 L 88.486 76.481 L 110.221 106.314 L 110.221 110.292 L 15.379 110.292 L 15.379 86.426 Z" fill="#1c71d8" opacity="0.5" style=""/>
-    <path d="M 16 112 L 16 90 L 50 112 Z" fill="#1a5fb4" opacity="0.4"/>
+    <path d="M 19.184 85.48 C 16.835 85.199 41.727 53.946 41.749 54.02 C 41.749 54.02 72.052 94.118 69.957 95.966 C 69.868 94.049 88.759 74.948 88.761 74.993 C 88.761 74.993 110.847 101.865 109.418 103.62 C 110.555 102.365 111.201 105.833 108.135 109.216 C 109.104 112.694 21.892 113.106 19.393 109.262 C 15.539 107.714 16.768 82.893 19.184 85.48 Z" fill="#1c71d8" opacity="0.5" style=""/>
     <rect x="16" y="16" width="96" height="96" rx="8" ry="8" fill="none" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
     <path d="M 24 17 H 104 A 7 7 0 0 1 111 24 V 104 A 7 7 0 0 1 104 111 H 24 A 7 7 0 0 1 17 104 V 24 A 7 7 0 0 1 24 17 Z" fill="none" stroke="white" stroke-opacity="0.15" stroke-width="1"/>
+    <g transform="matrix(2.382862, 0, 0, 2.28726, 64, 64)" style="">
+      <circle r="12" fill="url(#sunGradient)" style="stroke-width: 1.28476px;"/>
+      <path d="M -9 -2 H 9 V 1 A 3 3 0 0 1 6 4 H 1 V 1 H -1 V 4 H -6 A 3 3 0 0 1 -9 1 Z" fill="#241f31"/>
+      <path d="M -9 -2 L -11 -3 V -1 L -9 0 Z" fill="#241f31"/>
+      <path d="M 8.953 -2 L 10.953 -3 L 10.953 -1 L 8.953 0 L 8.953 -2 Z" fill="#241f31"/>
+      <path d="M -3.376 6.319 C -1.376 8.319 1.972 8.033 5.305 5.366" fill="none" stroke="#241f31" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
   </g>
-  <g transform="translate(0, 0)">
+  <g transform="translate(0, 0)" style="">
     <rect x="12" y="12" width="104" height="104" rx="10" fill="none" stroke="#99c1f1" stroke-width="2" stroke-dasharray="8 4"/>
     <circle cx="12" cy="12" r="6" fill="#ffffff" stroke="#3584e4" stroke-width="2" filter="url(#shadow)"/>
     <circle cx="116" cy="12" r="6" fill="#ffffff" stroke="#3584e4" stroke-width="2" filter="url(#shadow)"/>
