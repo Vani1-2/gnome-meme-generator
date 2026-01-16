@@ -23,7 +23,7 @@
   <developer id="io.github.vani1_2.memerist">
     <name>Vani1-2</name>
   </developer>
-  <url type="homepage">https://github.com/Vani1-2/gnome-meme-editor</url>
+  <url type="homepage">https://github.com/Vani1-2/memerist</url>
   <translation type="gettext">memerist</translation>
   <launchable type="desktop-id">io.github.vani1_2.memerist.desktop</launchable>
   <content_rating type="oars-1.1" />
