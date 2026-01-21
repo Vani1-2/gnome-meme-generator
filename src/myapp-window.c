@@ -1253,7 +1253,7 @@ static void render_meme (MyappWindow *self) {
        cairo_text_extents_t extents;
        double off_x, off_y;
 
-       cairo_select_font_face (cr, "Impact", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
+       cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
        cairo_set_font_size (cr, layer->font_size);
        cairo_text_extents (cr, layer->text, &extents);
 

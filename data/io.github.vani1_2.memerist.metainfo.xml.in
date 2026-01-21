@@ -23,14 +23,23 @@
   <developer id="io.github.vani1_2.memerist">
     <name>Vani1-2</name>
   </developer>
+  
   <url type="homepage">https://github.com/Vani1-2/memerist</url>
+  <url type="bugtracker">https://github.com/Vani1-2/memerist/issues</url>
+  <url type="vcs-browser">https://github.com/Vani1-2/memerist</url>
+  
   <translation type="gettext">memerist</translation>
   <launchable type="desktop-id">io.github.vani1_2.memerist.desktop</launchable>
-  <content_rating type="oars-1.1" />
+  
+  <content_rating type="oars-1.1">
+    <content_attribute id="language-humor">mild</content_attribute>
+  </content_rating>
+  
   <branding>
     <color type="primary" scheme_preference="light">#3584e4</color>
     <color type="primary" scheme_preference="dark">#1c71d8</color>
   </branding>
+  
 <screenshots>
   <screenshot type="default">
     <caption>Main window</caption>
@@ -45,8 +54,9 @@
   <image>https://raw.githubusercontent.com/Vani1-2/memerist/main/assets/screenshot3.png</image>
   </screenshot>
 </screenshots>
+
   <releases>
-    <release version="0.2.4" date="2026-1-19">
+    <release version="0.2.5" date="2026-01-21">
       <description translate="no">
         <ul>
           <li>fixed translation generation</li>
