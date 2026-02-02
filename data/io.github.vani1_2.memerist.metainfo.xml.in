@@ -61,6 +61,7 @@
         <ul>
         <li>New and improved crop feature</li>
         <li>Fixed an issue where the selection highlight gets also get exported</li>
+        <li>Fixed app crashing when clicking apply changes in crop mode</li>
         </ul>
       </description>
     </release>
