@@ -24,9 +24,9 @@
     <name>Vani1-2</name>
   </developer>
   
-  <url type="homepage">https://github.com/Vani1-2/memerist</url>
-  <url type="bugtracker">https://github.com/Vani1-2/memerist/issues</url>
-  <url type="vcs-browser">https://github.com/Vani1-2/memerist</url>
+  <url type="homepage">https://github.com/vani-tty1/memerist</url>
+  <url type="bugtracker">https://github.com/vani-tty1/memerist/issues</url>
+  <url type="vcs-browser">https://github.com/vani-tty1/memerist</url>
   
   <translation type="gettext">memerist</translation>
   <launchable type="desktop-id">io.github.vani1_2.memerist.desktop</launchable>
