@@ -2,8 +2,7 @@
 #include <cairo.h>
 #include <math.h>
 
-void
-meme_get_image_coordinates (GtkWidget *widget, GdkPixbuf *img, double wx, double wy, double *ix, double *iy) {
+void meme_get_image_coordinates (GtkWidget *widget, GdkPixbuf *img, double wx, double wy, double *ix, double *iy) {
   double ww, wh, iw, ih, scale, draw_w, draw_h, off_x, off_y;
   double w_ratio, h_ratio;
 
@@ -49,8 +48,7 @@ meme_get_crop_handle_at_position (double x, double y, double cx, double cy, doub
     return HANDLE_NONE;
 }
 
-GdkPixbuf *
-meme_apply_saturation_contrast (GdkPixbuf *src, double sat, double contrast) {
+GdkPixbuf * meme_apply_saturation_contrast (GdkPixbuf *src, double sat, double contrast) {
   GdkPixbuf *copy;
   int w, h, stride, n_channels, x, y;
   guchar *pixels, *row_ptr, *p;
@@ -85,8 +83,7 @@ meme_apply_saturation_contrast (GdkPixbuf *src, double sat, double contrast) {
   return copy;
 }
 
-GdkPixbuf *
-meme_apply_deep_fry (GdkPixbuf *src) {
+GdkPixbuf * meme_apply_deep_fry (GdkPixbuf *src) {
   GdkPixbuf *fried = gdk_pixbuf_copy (src);
   int w = gdk_pixbuf_get_width (fried);
   int h = gdk_pixbuf_get_height (fried);
@@ -121,8 +118,7 @@ meme_apply_deep_fry (GdkPixbuf *src) {
   return final;
 }
 
-GdkPixbuf *
-meme_render_composite (GdkPixbuf *bg, GList *layers, gboolean cinematic, gboolean deep_fry) {
+GdkPixbuf * meme_render_composite (GdkPixbuf *bg, GList *layers, gboolean cinematic, gboolean deep_fry) {
   if (!bg) return NULL;
   int w = gdk_pixbuf_get_width (bg);
   int h = gdk_pixbuf_get_height (bg);
@@ -193,8 +189,7 @@ meme_render_composite (GdkPixbuf *bg, GList *layers, gboolean cinematic, gboolea
   return comp;
 }
 
-GdkTexture *
-meme_render_editor_overlay (GdkPixbuf *composite, GList *layers, ImageLayer *selected, gboolean crop_active, double cx, double cy, double cw, double ch) {
+GdkTexture * meme_render_editor_overlay (GdkPixbuf *composite, GList *layers, ImageLayer *selected, gboolean crop_active, double cx, double cy, double cw, double ch) {
   if (!composite) return NULL;
   int w = gdk_pixbuf_get_width (composite);
   int h = gdk_pixbuf_get_height (composite);

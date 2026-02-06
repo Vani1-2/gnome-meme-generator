@@ -1,7 +1,6 @@
 #include "meme-core.h"
 
-ImageLayer *
-meme_layer_copy (const ImageLayer *src) {
+ImageLayer * meme_layer_copy (const ImageLayer *src) {
   ImageLayer *dst = g_new0 (ImageLayer, 1);
   *dst = *src;
   if (src->pixbuf) g_object_ref (src->pixbuf);
@@ -9,8 +8,7 @@ meme_layer_copy (const ImageLayer *src) {
   return dst;
 }
 
-void
-meme_layer_free (gpointer data) {
+void meme_layer_free (gpointer data) {
   ImageLayer *layer = (ImageLayer *)data;
   if (layer) {
     if (layer->pixbuf) g_object_unref (layer->pixbuf);
@@ -19,8 +17,7 @@ meme_layer_free (gpointer data) {
   }
 }
 
-GList *
-meme_layer_list_copy (GList *src) {
+GList * meme_layer_list_copy (GList *src) {
   GList *dst = NULL;
   GList *l;
   for (l = src; l != NULL; l = l->next) {
@@ -29,7 +26,6 @@ meme_layer_list_copy (GList *src) {
   return dst;
 }
 
-void
-meme_layer_list_free (GList *list) {
+void meme_layer_list_free (GList *list) {
     g_list_free_full (list, (GDestroyNotify)meme_layer_free);
 }

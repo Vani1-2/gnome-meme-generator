@@ -56,12 +56,11 @@
 </screenshots>
 
   <releases>
-    <release version="0.3.0" date="2026-02-06">
+    <release version="0.3.1" date="2026-02-06">
       <description translate="no">
         <ul>
-        <li>New and improved crop feature</li>
-        <li>Fixed an issue where the selection highlight gets also get exported</li>
-        <li>Fixed app crashing when clicking apply changes in crop mode</li>
+        <li>Code refactoring and decluttering</li>
+        <li>sourcode cleanup</li>
         </ul>
       </description>
     </release>
