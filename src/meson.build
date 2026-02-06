@@ -3,6 +3,8 @@ myapp_sources = [
   'main.c',
   'myapp-application.c',
   'myapp-window.c',
+  'meme-core.c',
+  'meme-renderer.c'
 ]
 
 myapp_deps = [
