@@ -58,14 +58,14 @@ sudo dnf install memerist
 ### Debian/Ubuntu
 
 Add the dedicated repository to your sources:
-[**APT Repository**](https://vani1-2.github.io/vani-pkgs)
+[**APT Repository**](https://vani-tty1.github.io/vani-pkgs)
 
 
 
 ### Arch Linux and derivatives
 You arch users know this, its very simple.
 ```bash
-curl -SL https://raw.githubusercontent.com/Vani1-2/gnome-meme-editor/main/scripts/install-archlinux.sh | bash
+curl -SL https://raw.githubusercontent.com/vani-tty1/memerist/main/scripts/install-archlinux.sh | bash
 ```
 
 
@@ -89,7 +89,7 @@ sudo apt install libgtk-4-dev libadwaita-1-dev meson ninja-build
 
 ```bash
 # Clone the repository
-git clone https://github.com/Vani1-2/memerist.git
+git clone https://github.com/vani-tty1/memerist.git
 cd memerist
 
 # Configure the build
