@@ -39,7 +39,7 @@ myapp_application_new (const char        *application_id,
   return g_object_new (MYAPP_TYPE_APPLICATION,
                        "application-id", application_id,
                        "flags", flags,
-                       "resource-base-path", "/io/github/vani1_2/memerist",
+                       "resource-base-path", "/io/github/vani_tty1/memerist",
                        NULL);
 }
 
@@ -74,7 +74,7 @@ myapp_application_about_action (GSimpleAction *action,
 
   adw_show_about_dialog (GTK_WIDGET (window),
                          "application-name", "Meme Editor",
-                         "application-icon", "io.github.vani1_2.memerist",
+                         "application-icon", "io.github.vani_tty1.memerist",
                          "developer-name", "vani-tty1",
                          "version", PACKAGE_VERSION,
                          "developers", developers,
@@ -104,7 +104,7 @@ myapp_application_shortcuts_action (GSimpleAction *action,
   GtkWindow *parent = gtk_application_get_active_window (GTK_APPLICATION (self));
   GtkBuilder *builder;
   GtkWindow *shortcuts_window;
-  builder = gtk_builder_new_from_resource ("/io/github/vani1_2/memerist/shortcuts-dialog.ui");
+  builder = gtk_builder_new_from_resource ("/io/github/vani_tty1/memerist/shortcuts-dialog.ui");
   shortcuts_window = GTK_WINDOW (gtk_builder_get_object (builder, "shortcuts_dialog"));
   if (parent) {
       gtk_window_set_transient_for (shortcuts_window, parent);

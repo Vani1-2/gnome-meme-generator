@@ -1,4 +1,4 @@
-app-id: io.github.vani1_2.memerist
+app-id: io.github.vani_tty1.memerist
 runtime: org.gnome.Platform
 runtime-version: '49'
 sdk: org.gnome.Sdk
@@ -14,6 +14,6 @@ modules:
     buildsystem: meson
     sources:
       - type: git
-        url: https://github.com/Vani1-2/memerist.git
-        tag: v0.2.5
-        commit: 9f828881f9947828bff32e158ac9a16b0d2e8e9e
+        url: https://github.com/vani-tty1/memerist.git
+        tag: v0.3.1
+        commit: 99b7106c83bf720fba0b078bf7a9c8cf9450638b

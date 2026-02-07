@@ -1,14 +1,14 @@
 desktop_file = i18n.merge_file(
-  input: 'io.github.vani1_2.memerist.desktop.in',
-  output: 'io.github.vani1_2.memerist.desktop',
+  input: 'io.github.vani_tty1.memerist.desktop.in',
+  output: 'io.github.vani_tty1.memerist.desktop',
   type: 'desktop',
   po_dir: '../po',
   install: true,
   install_dir: get_option('datadir') / 'applications',
 )
 appstream_file = i18n.merge_file(
-  input: 'io.github.vani1_2.memerist.metainfo.xml.in',
-  output: 'io.github.vani1_2.memerist.metainfo.xml',
+  input: 'io.github.vani_tty1.memerist.metainfo.xml.in',
+  output: 'io.github.vani_tty1.memerist.metainfo.xml',
   po_dir: '../po',
   install: true,
   install_dir: get_option('datadir') / 'metainfo',
@@ -29,7 +29,7 @@ if desktop_utils.found()
 endif
 
 install_data(
-  'io.github.vani1_2.memerist.gschema.xml',
+  'io.github.vani_tty1.memerist.gschema.xml',
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )
 

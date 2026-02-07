@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <component type="desktop-application">
-  <id>io.github.vani1_2.memerist</id>
+  <id>io.github.vani_tty1.memerist</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <name>Memerist</name>
@@ -18,7 +18,7 @@
 
     </ul>
   </description>
-  <developer id="io.github.vani1_2.memerist">
+  <developer id="io.github.vani_tty1.memerist">
     <name>vani-tty1</name>
   </developer>
   
@@ -27,7 +27,7 @@
   <url type="vcs-browser">https://github.com/vani-tty1/memerist</url>
   
   <translation type="gettext">memerist</translation>
-  <launchable type="desktop-id">io.github.vani1_2.memerist.desktop</launchable>
+  <launchable type="desktop-id">io.github.vani_tty1.memerist.desktop</launchable>
   
   <content_rating type="oars-1.1">
     <content_attribute id="language-humor">mild</content_attribute>
@@ -41,26 +41,23 @@
 <screenshots>
   <screenshot type="default">
     <caption>Main window</caption>
-    <image>https://raw.githubusercontent.com/Vani1-2/memerist/main/assets/screenshot1.png</image>
+    <image>https://raw.githubusercontent.com/vani-tty1/memerist/main/assets/screenshot1.png</image>
   </screenshot>
   <screenshot>
     <caption>Sample Meme</caption>
-    <image>https://raw.githubusercontent.com/Vani1-2/memerist/main/assets/screenshot2.png</image>
+    <image>https://raw.githubusercontent.com/vani-tty1/memerist/main/assets/screenshot2.png</image>
   </screenshot>
   <screenshot>
   <caption>About info</caption>
-  <image>https://raw.githubusercontent.com/Vani1-2/memerist/main/assets/screenshot3.png</image>
+  <image>https://raw.githubusercontent.com/vani-tty1/memerist/main/assets/screenshot3.png</image>
   </screenshot>
 </screenshots>
 
   <releases>
-    <release version="0.3.1" date="2026-02-07">
+    <release version="0.3.2" date="2026-02-07">
       <description translate="no">
         <ul>
-        <li>Code refactoring and decluttering</li>
-        <li>sourcode cleanup</li>
-        <li>Fixed an issue where contrast filter does not work on templates</li>
-        <li>Fixed keyboard shortcuts not showing in header menu</li>
+        <li>changed application ID</li>
         </ul>
       </description>
     </release>

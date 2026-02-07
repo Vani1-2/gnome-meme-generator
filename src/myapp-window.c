@@ -340,7 +340,7 @@ static void on_delete_layer_clicked (MyappWindow *self) {
   }
 }
 
-// --- Drag & Drop ---
+
 static void on_mouse_move (GtkEventControllerMotion *controller, double x, double y, MyappWindow *self) {
   double ix, iy, img_w, img_h;
   if (!self->template_image) { gtk_widget_set_cursor (GTK_WIDGET (self->meme_preview), NULL); return; }
@@ -369,7 +369,7 @@ static void on_mouse_move (GtkEventControllerMotion *controller, double x, doubl
      return;
   }
 
-  // Layer Hover Logic
+  // Layer hover
   GList *l;
   gboolean found = FALSE;
   for (l = g_list_last(self->layers); l != NULL; l = l->prev) {
@@ -481,7 +481,6 @@ static void on_drag_update (GtkGestureDrag *gesture, double offset_x, double off
       self->selected_layer->y = CLAMP(self->drag_obj_start_y + dy, 0.0, 1.0);
   }
   else if (self->drag_type == DRAG_TYPE_IMAGE_RESIZE && self->selected_layer) {
-      // Simplified distance scaling
       double cx = self->selected_layer->x * img_w, cy = self->selected_layer->y * img_h;
       double sdx = self->drag_start_x - cx, sdy = self->drag_start_y - cy;
       double cdx = (self->drag_start_x + offset_x/s) - cx, cdy = (self->drag_start_y + offset_y/s) - cy;
@@ -493,7 +492,7 @@ static void on_drag_update (GtkGestureDrag *gesture, double offset_x, double off
 
 static void on_drag_end (GtkGestureDrag *g, double x, double y, MyappWindow *self) { self->drag_type = DRAG_TYPE_NONE; }
 
-// --- File Handling ---
+//File Handling
 static void on_load_image_response (GObject *s, GAsyncResult *r, gpointer d) {
   GtkFileDialog *dialog = GTK_FILE_DIALOG (s);
   MyappWindow *self = MYAPP_WINDOW (d);
@@ -607,7 +606,7 @@ static void myapp_window_class_init (MyappWindowClass *klass) {
 
   object_class->finalize = myapp_window_finalize;
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/io/github/vani1_2/memerist/myapp-window.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/io/github/vani_tty1/memerist/myapp-window.ui");
   gtk_widget_class_bind_template_child (widget_class, MyappWindow, layer_group);
   gtk_widget_class_bind_template_child (widget_class, MyappWindow, templates_group);
   gtk_widget_class_bind_template_child (widget_class, MyappWindow, transform_group);
@@ -646,7 +645,7 @@ static void myapp_window_class_init (MyappWindowClass *klass) {
 
 static char *
 get_user_template_dir (void) {
-  return g_build_filename (g_get_user_data_dir (), "io.github.vani1_2.memerist", "templates", NULL);
+  return g_build_filename (g_get_user_data_dir (), "io.github.vani_tty1.memerist", "templates", NULL);
 }
 
 static gboolean
@@ -688,7 +687,7 @@ scan_directory_for_templates (MyappWindow *self, const char *dir_path) {
 static void
 scan_resources_for_templates (MyappWindow *self) {
   GError *error = NULL;
-  const char *res_path = "/io/github/vani1_2/memerist/templates";
+  const char *res_path = "/io/github/vani_tty1/memerist/templates";
   char **files = g_resources_enumerate_children (res_path, 0, &error);
 
   if (files) {
